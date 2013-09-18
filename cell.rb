@@ -1,15 +1,19 @@
 class Cell
-  attr_reader :x, :y
+  attr_reader :coordinates
 
-  def initialize(x, y)
-    @x, @y = x, y
+  def initialize(coordinates)
+    @coordinates = coordinates
   end
 
   def reincarnate(neighbor_finder)
-    Cell.new x, y if neighbor_finder.neighbors_of(self).count == 2
+    Cell.new(coordinates.dup) if neighbor_finder.neighbors_of(self).count == 2
   end
 
   def ==(cell)
-    x == cell.x && y == cell.y
+    coordinates == cell.coordinates
+  end
+
+  def distance_from(cell)
+    coordinates.distance_from(cell.coordinates)
   end
 end

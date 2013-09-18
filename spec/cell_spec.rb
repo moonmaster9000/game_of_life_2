@@ -1,16 +1,17 @@
+require_relative "../coordinates"
 require_relative "../cell"
 
 describe Cell do
   describe "equality" do
     context "cells have same coordinates" do
       specify "equal" do
-        Cell.new(0,0).should == Cell.new(0,0)
+        Cell.new(Coordinates.new(0,0)).should == Cell.new(Coordinates.new(0,0))
       end
     end
 
     context "cells have different coordinates" do
       specify "not equal" do
-        Cell.new(0,0).should_not == Cell.new(0,1)
+        Cell.new(Coordinates.new(0,0)).should_not == Cell.new(Coordinates.new(0,1))
       end
     end
   end
@@ -26,7 +27,7 @@ describe Cell do
       let(:neighbors) { [] }
 
       it "returns nil" do
-        cell = Cell.new(0,0)
+        cell = Cell.new(Coordinates.new(0,0))
         cell.reincarnate(neighbor_finder).should be_nil
       end
     end
@@ -35,7 +36,7 @@ describe Cell do
       let(:neighbors) { [double(:cell)] }
 
       it "returns nil" do
-        cell = Cell.new(0,0)
+        cell = Cell.new(Coordinates.new(0,0))
         cell.reincarnate(neighbor_finder).should be_nil
       end
     end
@@ -44,8 +45,8 @@ describe Cell do
       let(:neighbors) { [double(:cell), double(:cell)] }
 
       it "returns a copy of itself" do
-        cell = Cell.new(0,0)
-        cell.reincarnate(neighbor_finder).should == Cell.new(0,0)
+        cell = Cell.new(Coordinates.new(0,0))
+        cell.reincarnate(neighbor_finder).should == Cell.new(Coordinates.new(0,0))
       end
     end
   end
