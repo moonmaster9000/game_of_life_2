@@ -7,7 +7,7 @@ class Game
 
   def tick
     @living_cells = living_cells.map do |living_cell|
-      living_cell.reincarnate(self)
+      living_cell.reincarnate(neighbors_of(living_cell))
     end.compact
   end
 

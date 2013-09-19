@@ -17,18 +17,12 @@ describe Cell do
   end
 
   describe "reincarnation" do
-    let(:neighbor_finder) { double :neighbor_finder }
-
-    before do
-      neighbor_finder.stub(:neighbors_of).and_return neighbors
-    end
-
     context "no neighbors" do
       let(:neighbors) { [] }
 
       it "returns nil" do
         cell = Cell.new(Coordinates.new(0,0))
-        cell.reincarnate(neighbor_finder).should be_nil
+        cell.reincarnate(neighbors).should be_nil
       end
     end
 
@@ -37,7 +31,7 @@ describe Cell do
 
       it "returns nil" do
         cell = Cell.new(Coordinates.new(0,0))
-        cell.reincarnate(neighbor_finder).should be_nil
+        cell.reincarnate(neighbors).should be_nil
       end
     end
 
@@ -46,7 +40,7 @@ describe Cell do
 
       it "returns a copy of itself" do
         cell = Cell.new(Coordinates.new(0,0))
-        cell.reincarnate(neighbor_finder).should == Cell.new(Coordinates.new(0,0))
+        cell.reincarnate(neighbors).should == Cell.new(Coordinates.new(0,0))
       end
     end
   end

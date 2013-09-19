@@ -5,8 +5,8 @@ class Cell
     @coordinates = coordinates
   end
 
-  def reincarnate(neighbor_finder)
-    Cell.new(coordinates.dup) if neighbor_finder.neighbors_of(self).count == 2
+  def reincarnate(neighbors)
+    Cell.new(coordinates.dup) if neighbors.count == 2
   end
 
   def ==(cell)
