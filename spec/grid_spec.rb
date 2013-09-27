@@ -9,6 +9,21 @@ describe Grid do
       grid.repopulate
       grid.coordinates.should be_empty
     end
+    
+    it "finds dead cells near living cells and sees if they can be repopulated" do
+      coordinate = double :coordinate, position: double(:position)
+      position_finder = double :position_finder
+      new_position = double(:new_position)
+      position_finder.stub(:positions_near_coordinate).with(coordinate).and_return(new_position)
+      coordinate_factory = double(:coordinate_factory)
+      grid = Grid.new coordinates: [coordinate], position_finder: position_finder, coordinate_factory: coordinate_factory
+
+      new_coordinate = double(:new_coordinate)
+      coordinate_factory.should_receive(:new).with(position: new_position).and_return new_coordinate
+      new_coordinate.should_receive(:repopulate).with(grid).and_return nil
+      coordinate.should_receive(:repopulate).with(grid).and_return nil
+      grid.repopulate
+    end
   end
 
   describe "#neighbors_of" do

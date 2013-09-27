@@ -4,7 +4,18 @@ class Coordinate
   def initialize(position: nil, contents: nil)
     @position = position
     @x, @y = @position
-    @contents = contents
+    @contents = contents || DeadCell.new
+  end
+
+  def self.positions_near_coordinate(coordinate)
+    x = coordinate.position.first
+    y = coordinate.position.last
+    
+    [
+      [x - 1, y + 1], [x, y + 1], [x + 1, y + 1],
+      [x - 1, y    ]            , [x + 1, y    ],
+      [x - 1, y - 1], [x, y - 1], [x + 1, y - 1]
+    ]
   end
 
   def ==(coordinate)

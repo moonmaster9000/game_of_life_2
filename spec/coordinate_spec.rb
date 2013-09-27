@@ -1,6 +1,16 @@
 require_relative "../coordinate"
 
 describe Coordinate do
+  describe "#positions_near_coordinate" do
+    it "returns all the positions a distance of 1 from the coordinate" do
+      Coordinate.positions_near_coordinate(Coordinate.new(position: [0,0])).should =~ [
+        [-1,1], [0,1], [1,1],
+        [-1,0],        [1,0],
+        [-1,-1],[0,-1],[1,-1]
+      ]
+    end
+  end
+
   describe "#distance_from" do
     it "returns the greater of the absolute distance on the x or y axis" do
       Coordinate.new(position: [0,1]).distance_from(Coordinate.new(position: [1,3])).should == 2
