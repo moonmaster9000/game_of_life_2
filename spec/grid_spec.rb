@@ -4,7 +4,7 @@ describe Grid do
   describe "#repopulate" do
     it "returns a new coordinate system containing any coordinates that aren't empty after repopulation" do
       coordinate = double(:coordinate)
-      grid = Grid.new coordinates: [coordinate]
+      grid = Grid.new coordinates: [coordinate], position_finder: double(:position_finder, positions_near_coordinate: []), coordinate_factory: double(:coordinate_factory)
       coordinate.should_receive(:repopulate).with(grid).and_return nil
       grid.repopulate
       grid.coordinates.should be_empty
@@ -14,7 +14,7 @@ describe Grid do
       coordinate = double :coordinate, position: double(:position)
       position_finder = double :position_finder
       new_position = double(:new_position)
-      position_finder.stub(:positions_near_coordinate).with(coordinate).and_return(new_position)
+      position_finder.stub(:positions_near_coordinate).with(coordinate).and_return([new_position])
       coordinate_factory = double(:coordinate_factory)
       grid = Grid.new coordinates: [coordinate], position_finder: position_finder, coordinate_factory: coordinate_factory
 
@@ -36,7 +36,7 @@ describe Grid do
       end
 
       it "returns an empty array" do
-        grid = Grid.new(coordinates: [existing_coordinate])
+        grid = Grid.new(coordinates: [existing_coordinate], position_finder: double(:position_finder, positions_near_coordinate: []), coordinate_factory: double(:coordinate_factory))
         grid.neighbors_of(new_coordinate).should be_empty
       end
     end
@@ -47,7 +47,7 @@ describe Grid do
       end
 
       it "returns an array containing the existing coordinate" do
-        grid = Grid.new(coordinates: [existing_coordinate])
+        grid = Grid.new(coordinates: [existing_coordinate], position_finder: double(:position_finder, positions_near_coordinate: []), coordinate_factory: double(:coordinate_factory))
         grid.neighbors_of(new_coordinate).should include existing_coordinate
       end
     end
