@@ -29,5 +29,24 @@ describe LivingCell do
         cell.repopulate(neighbors).should be_a(LivingCell)
       end
     end
+
+    context "three neighbors" do
+      let(:neighbors) { [double(:cell), double(:cell), double(:cell)] }
+
+      it "returns a copy of itself" do
+        cell = LivingCell.new
+        cell.repopulate(neighbors).should be_a(LivingCell)
+      end
+    end
+
+    context "four neighbors" do
+      let(:neighbors) { [double(:cell), double(:cell), double(:cell), double(:cell)] }
+
+      it "returns nil" do
+        cell = LivingCell.new
+        cell.repopulate(neighbors).should be_nil
+      end
+    end
+
   end
 end
