@@ -1,8 +1,7 @@
 class Grid
-  attr_reader :coordinates, :position_finder, :coordinate_factory
+  attr_reader :coordinates, :coordinate_factory
 
-  def initialize(coordinates: [], position_finder: Coordinate, coordinate_factory: Coordinate)
-    @position_finder = position_finder
+  def initialize(coordinates: [], coordinate_factory: Coordinate)
     @coordinate_factory = coordinate_factory
     @coordinates = coordinates
   end
@@ -21,10 +20,12 @@ class Grid
 
   private
   def nearby_coordinates
-    coordinates.map do |coordinate|
-      position_finder.positions_near_coordinate(coordinate)
-    end.reduce(&:+).map do |position|
+    nearby_positions.map do |position|
       coordinate_factory.new(position: position) unless coordinates.any? {|c| c.position == position }
     end.compact
+  end
+
+  def nearby_positions
+    coordinates.collect(&:neighboring_positions).reduce(&:+)
   end
 end
